@@ -1,24 +1,43 @@
 <?php
 
-function printBooleanArray() 
+function printBooleanArray($arrayDimension, $booleanArray = []) 
 {
-    $arrayDimension = (int) readline("Columns number: ");
+    $arrayDimension = (int) $arrayDimension;
 
     if ($arrayDimension < 0) {
-        exit("Can't buld array with negative number of columns");
+        echo "Can't buld array with negative number of columns\n";
+        return;
     }
 
-    if ($arrayDimension == 0) {
-        exit("Array is empty");
+    if ($arrayDimension == 0 || empty($booleanArray) || gettype($booleanArray) !== 'array') {
+        echo "Array is empty\n";
+        return;
     }
 
-    foreach (range(1, $arrayDimension) as $row) {
-        foreach(range(1, $arrayDimension) as $column) {
-            echo rand(0, 1) . ' ';
+    foreach ($booleanArray as $value) {
+        if ($value !== 1 && $value !== 0) {
+            echo "Array must contain only 0 and 1 values\n";
+            return;
         }
+    }
 
-        echo "\n";
+    echo "\n\n";
+
+    $arrayToPrint = array_chunk($booleanArray, $arrayDimension);
+
+    foreach ($arrayToPrint as $arrayChunk) {
+        echo implode(' ', $arrayChunk) . "\n";
     }
 }
 
-printBooleanArray();
+$arrayDimension = (int) readline("Columns number: ");
+
+printBooleanArray($arrayDimension);             // check for empmty argument
+printBooleanArray($arrayDimension, 'hello');      // Check for not array type
+printBooleanArray($arrayDimension, []);           // Check for empty array
+printBooleanArray($arrayDimension, [0, 1, 1, 2]); // check for array values is 0 and 1 
+printBooleanArray($arrayDimension, [0]);          // check for array with one element inside
+
+// Check for big valid array
+printBooleanArray($arrayDimension, [0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1]); 
+
