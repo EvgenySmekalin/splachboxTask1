@@ -4,10 +4,6 @@ function printBooleanArray()
 {
     $arrayDimension = (int) readline("Columns number: ");
 
-    if (gettype($arrayDimension) !== "integer")  {
-        exit("Array dimension mast be integer");
-    }
-
     if ($arrayDimension < 0) {
         exit("Can't buld array with negative number of columns");
     }
